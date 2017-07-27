@@ -123,7 +123,7 @@ export function isValidBlock( rawContent, blockType, attributes ) {
 
 	const isValid = ( actual === expected );
 
-	if ( ! isValid && 'development' === process.env.NODE_ENV ) {
+	if ( ! isValid && 'production' !== process.env.NODE_ENV ) {
 		// eslint-disable-next-line no-console
 		console.error(
 			'Invalid block parse\n' +
