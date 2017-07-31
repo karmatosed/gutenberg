@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { flow, groupBy, sortBy, findIndex, filter, debounce, find } from 'lodash';
+import { flow, groupBy, sortBy, findIndex, filter, find } from 'lodash';
 import { connect } from 'react-redux';
 
 /**
@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
  */
 import { __, _n, sprintf } from 'i18n';
 import { Component } from 'element';
-import { Popover, withFocusReturn, withInstanceId } from 'components';
+import { Popover, withFocusReturn, withInstanceId, withAssertiveMessages } from 'components';
 import { TAB, ESCAPE, LEFT, UP, RIGHT, DOWN } from 'utils/keycodes';
 import { getCategories, getBlockTypes, BlockIcon } from 'blocks';
 
@@ -36,8 +36,6 @@ export class InserterMenu extends Component {
 		this.getBlocksForCurrentTab = this.getBlocksForCurrentTab.bind( this );
 		this.sortBlocks = this.sortBlocks.bind( this );
 		this.addRecentBlocks = this.addRecentBlocks.bind( this );
-		const speakAssertive = ( message ) => wp.a11y.speak( message, 'assertive' );
-		this.debouncedSpeakAssertive = debounce( speakAssertive, 500 );
 	}
 
 	componentDidMount() {
@@ -46,20 +44,19 @@ export class InserterMenu extends Component {
 
 	componentWillUnmount() {
 		document.removeEventListener( 'keydown', this.onKeyDown );
-		this.debouncedSpeakAssertive.cancel();
 	}
 
 	componentDidUpdate() {
 		const searchResults = this.searchBlocks( getBlockTypes() );
 		// Announce the blocks search results to screen readers.
 		if ( !! searchResults.length ) {
-			this.debouncedSpeakAssertive( sprintf( _n(
+			this.props.debouncedSpeakAssertive( sprintf( _n(
 				'%d result found',
 				'%d results found',
 				searchResults.length
 			), searchResults.length ) );
 		} else {
-			this.debouncedSpeakAssertive( __( 'No results.' ) );
+			this.props.debouncedSpeakAssertive( __( 'No results.' ) );
 		}
 	}
 
@@ -433,6 +430,7 @@ const connectComponent = connect(
 
 export default flow(
 	withInstanceId,
+	withAssertiveMessages,
 	withFocusReturn,
 	connectComponent
 )( InserterMenu );

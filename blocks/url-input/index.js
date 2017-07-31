@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { throttle, debounce } from 'lodash';
+import { throttle } from 'lodash';
 import classnames from 'classnames';
 import scrollIntoView from 'dom-scroll-into-view';
 
@@ -11,7 +11,7 @@ import scrollIntoView from 'dom-scroll-into-view';
 import { __, sprintf, _n } from 'i18n';
 import { Component } from 'element';
 import { UP, DOWN, ENTER } from 'utils/keycodes';
-import { Spinner, withInstanceId } from 'components';
+import { Spinner, withInstanceId, withAssertiveMessages } from 'components';
 
 class UrlInput extends Component {
 	constructor() {
@@ -20,7 +20,6 @@ class UrlInput extends Component {
 		this.onKeyDown = this.onKeyDown.bind( this );
 		this.bindListNode = this.bindListNode.bind( this );
 		this.updateSuggestions = throttle( this.updateSuggestions.bind( this ), 200 );
-		this.debouncedSpeakAssertive = debounce( this.speakAssertive.bind( this ), 500 );
 		this.suggestionNodes = [];
 		this.state = {
 			posts: [],
@@ -73,13 +72,13 @@ class UrlInput extends Component {
 					} );
 
 					if ( !! posts.length ) {
-						this.debouncedSpeakAssertive( sprintf( _n(
+						this.props.debouncedSpeakAssertive( sprintf( _n(
 							'%d result found, use up and down arrow keys to navigate.',
 							'%d results found, use up and down arrow keys to navigate.',
 							posts.length
 						), posts.length ) );
 					} else {
-						this.debouncedSpeakAssertive( __( 'No results.' ) );
+						this.props.debouncedSpeakAssertive( __( 'No results.' ) );
 					}
 				},
 				( xhr ) => {
@@ -133,15 +132,10 @@ class UrlInput extends Component {
 		}
 	}
 
-	speakAssertive( message ) {
-		wp.a11y.speak( message, 'assertive' );
-	}
-
 	componentWillUnmount() {
 		if ( this.suggestionsRequest ) {
 			this.suggestionsRequest.abort();
 		}
-		this.debouncedSpeakAssertive.cancel();
 	}
 
 	componentDidUpdate() {
@@ -216,4 +210,4 @@ class UrlInput extends Component {
 	}
 }
 
-export default withInstanceId( UrlInput );
+export default withAssertiveMessages( withInstanceId( UrlInput ) );
