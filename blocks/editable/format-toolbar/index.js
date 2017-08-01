@@ -8,7 +8,7 @@ import { isUndefined } from 'lodash';
  */
 import { __ } from 'i18n';
 import { Component } from 'element';
-import { IconButton, Toolbar, withAssertiveMessages } from 'components';
+import { IconButton, Toolbar, withA11yMessages } from 'components';
 import { ESCAPE } from 'utils/keycodes';
 
 /**
@@ -127,7 +127,7 @@ class FormatToolbar extends Component {
 			this.props.formats.link.value === '' &&
 			!! this.state.linkValue.length
 		) {
-			this.props.speakAssertive( __( 'Link inserted.' ) );
+			this.props.speak( __( 'Link inserted.' ) );
 		}
 	}
 
@@ -191,4 +191,4 @@ class FormatToolbar extends Component {
 	}
 }
 
-export default withAssertiveMessages( FormatToolbar );
+export default withA11yMessages( FormatToolbar );

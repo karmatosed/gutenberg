@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
  */
 import { __, _n, sprintf } from 'i18n';
 import { Component } from 'element';
-import { Popover, withFocusReturn, withInstanceId, withAssertiveMessages } from 'components';
+import { Popover, withFocusReturn, withInstanceId, withA11yMessages } from 'components';
 import { TAB, ESCAPE, LEFT, UP, RIGHT, DOWN } from 'utils/keycodes';
 import { getCategories, getBlockTypes, BlockIcon } from 'blocks';
 
@@ -50,13 +50,13 @@ export class InserterMenu extends Component {
 		const searchResults = this.searchBlocks( getBlockTypes() );
 		// Announce the blocks search results to screen readers.
 		if ( !! searchResults.length ) {
-			this.props.debouncedSpeakAssertive( sprintf( _n(
+			this.props.debouncedSpeak( sprintf( _n(
 				'%d result found',
 				'%d results found',
 				searchResults.length
 			), searchResults.length ) );
 		} else {
-			this.props.debouncedSpeakAssertive( __( 'No results.' ) );
+			this.props.debouncedSpeak( __( 'No results.' ) );
 		}
 	}
 
@@ -430,7 +430,7 @@ const connectComponent = connect(
 
 export default flow(
 	withInstanceId,
-	withAssertiveMessages,
+	withA11yMessages,
 	withFocusReturn,
 	connectComponent
 )( InserterMenu );
