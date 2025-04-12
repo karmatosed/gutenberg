@@ -1,40 +1,43 @@
 /**
- * WordPress dependencies
- */
-import { privateApis as routerPrivateApis } from '@wordpress/router';
-
-/**
  * Internal dependencies
  */
 import Editor from '../editor';
 import SidebarNavigationScreenTemplatesBrowse from '../sidebar-navigation-screen-templates-browse';
-import { unlock } from '../../lock-unlock';
+import SidebarNavigationScreenUnsupported from '../sidebar-navigation-screen-unsupported';
 import PageTemplates from '../page-templates';
-
-const { useLocation } = unlock( routerPrivateApis );
-
-function MobileTemplatesView() {
-	const { query = {} } = useLocation();
-	const { canvas = 'view' } = query;
-
-	return canvas === 'edit' ? (
-		<Editor />
-	) : (
-		<SidebarNavigationScreenTemplatesBrowse backPath="/" />
-	);
-}
 
 export const templatesRoute = {
 	name: 'templates',
 	path: '/template',
 	areas: {
-		sidebar: <SidebarNavigationScreenTemplatesBrowse backPath="/" />,
-		content: <PageTemplates />,
-		preview( { query } ) {
+		sidebar( { siteData } ) {
+			const isBlockTheme = siteData.currentTheme?.is_block_theme;
+			return isBlockTheme ? (
+				<SidebarNavigationScreenTemplatesBrowse backPath="/" />
+			) : (
+				<SidebarNavigationScreenUnsupported />
+			);
+		},
+		content( { siteData } ) {
+			const isBlockTheme = siteData.currentTheme?.is_block_theme;
+			return isBlockTheme ? <PageTemplates /> : undefined;
+		},
+		preview( { query, siteData } ) {
+			const isBlockTheme = siteData.currentTheme?.is_block_theme;
+			if ( ! isBlockTheme ) {
+				return undefined;
+			}
 			const isListView = query.layout === 'list';
 			return isListView ? <Editor /> : undefined;
 		},
-		mobile: <MobileTemplatesView />,
+		mobile( { siteData } ) {
+			const isBlockTheme = siteData.currentTheme?.is_block_theme;
+			return isBlockTheme ? (
+				<PageTemplates />
+			) : (
+				<SidebarNavigationScreenUnsupported />
+			);
+		},
 	},
 	widths: {
 		content( { query } ) {

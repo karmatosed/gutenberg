@@ -944,6 +944,9 @@
 				"core/file": {
 					"$ref": "#/definitions/settingsPropertiesComplete"
 				},
+				"core/footnotes": {
+					"$ref": "#/definitions/settingsPropertiesComplete"
+				},
 				"core/freeform": {
 					"$ref": "#/definitions/settingsPropertiesComplete"
 				},
@@ -1052,9 +1055,6 @@
 				"core/post-terms": {
 					"$ref": "#/definitions/settingsPropertiesComplete"
 				},
-				"core/post-time-to-read": {
-					"$ref": "#/definitions/settingsPropertiesComplete"
-				},
 				"core/post-title": {
 					"$ref": "#/definitions/settingsPropertiesComplete"
 				},
@@ -1083,6 +1083,9 @@
 					"$ref": "#/definitions/settingsPropertiesComplete"
 				},
 				"core/query-title": {
+					"$ref": "#/definitions/settingsPropertiesComplete"
+				},
+				"core/query-total": {
 					"$ref": "#/definitions/settingsPropertiesComplete"
 				},
 				"core/quote": {
@@ -1122,9 +1125,6 @@
 					"$ref": "#/definitions/settingsPropertiesComplete"
 				},
 				"core/table": {
-					"$ref": "#/definitions/settingsPropertiesComplete"
-				},
-				"core/table-of-contents": {
 					"$ref": "#/definitions/settingsPropertiesComplete"
 				},
 				"core/tag-cloud": {
@@ -1735,6 +1735,9 @@
 				":focus": {
 					"$ref": "#/definitions/stylesPropertiesComplete"
 				},
+				":focus-visible": {
+					"$ref": "#/definitions/stylesPropertiesComplete"
+				},
 				":hover": {
 					"$ref": "#/definitions/stylesPropertiesComplete"
 				},
@@ -1751,6 +1754,7 @@
 				":active",
 				":any-link",
 				":focus",
+				":focus-visible",
 				":hover",
 				":link",
 				":visited"
@@ -1924,6 +1928,9 @@
 				"core/file": {
 					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
 				},
+				"core/footnotes": {
+					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
+				},
 				"core/freeform": {
 					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
 				},
@@ -2032,9 +2039,6 @@
 				"core/post-terms": {
 					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
 				},
-				"core/post-time-to-read": {
-					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
-				},
 				"core/post-title": {
 					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
 				},
@@ -2063,6 +2067,9 @@
 					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
 				},
 				"core/query-title": {
+					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
+				},
+				"core/query-total": {
 					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
 				},
 				"core/quote": {
@@ -2102,9 +2109,6 @@
 					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
 				},
 				"core/table": {
-					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
-				},
-				"core/table-of-contents": {
 					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
 				},
 				"core/tag-cloud": {
@@ -2338,6 +2342,9 @@
 				"core/file": {
 					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
 				},
+				"core/footnotes": {
+					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
+				},
 				"core/freeform": {
 					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
 				},
@@ -2446,9 +2453,6 @@
 				"core/post-terms": {
 					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
 				},
-				"core/post-time-to-read": {
-					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
-				},
 				"core/post-title": {
 					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
 				},
@@ -2478,6 +2482,9 @@
 				},
 				"core/query-title": {
 					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
+				},
+				"core/query-total": {
+					"$ref": "#/definitions/stylesPropertiesAndElementsComplete"
 				},
 				"core/quote": {
 					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
@@ -2516,9 +2523,6 @@
 					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
 				},
 				"core/table": {
-					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
-				},
-				"core/table-of-contents": {
 					"$ref": "#/definitions/stylesVariationBlockPropertiesComplete"
 				},
 				"core/tag-cloud": {

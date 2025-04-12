@@ -13,7 +13,7 @@
  *
  * @param  array $context     Navigation block context.
  * @param  array $attributes  Block attributes.
- * @param  bool  $is_sub_menu Whether the link is part of a sub-menu.
+ * @param  bool  $is_sub_menu Whether the link is part of a sub-menu. Default false.
  * @return array Colors CSS classes and inline styles.
  */
 function block_core_navigation_link_build_css_colors( $context, $attributes, $is_sub_menu = false ) {
@@ -177,7 +177,22 @@ function render_block_core_navigation_link( $attributes, $content, $block ) {
 	// Don't render the block's subtree if it is a draft or if the ID does not exist.
 	if ( $is_post_type && $navigation_link_has_id ) {
 		$post = get_post( $attributes['id'] );
-		if ( ! $post || 'publish' !== $post->post_status ) {
+		/**
+		 * Filter allowed post_status for navigation link block to render.
+		 *
+		 * @since 6.8.0
+		 *
+		 * @param array $post_status
+		 * @param array $attributes
+		 * @param WP_Block $block
+		 */
+		$allowed_post_status = (array) apply_filters(
+			'render_block_core_navigation_link_allowed_post_status',
+			array( 'publish' ),
+			$attributes,
+			$block
+		);
+		if ( ! $post || ! in_array( $post->post_status, $allowed_post_status, true ) ) {
 			return '';
 		}
 	}
@@ -232,10 +247,6 @@ function render_block_core_navigation_link( $attributes, $content, $block ) {
 		$html .= ' rel="' . esc_attr( $attributes['rel'] ) . '"';
 	} elseif ( isset( $attributes['nofollow'] ) && $attributes['nofollow'] ) {
 		$html .= ' rel="nofollow"';
-	}
-
-	if ( isset( $attributes['title'] ) ) {
-		$html .= ' title="' . esc_attr( $attributes['title'] ) . '"';
 	}
 
 	// End appending HTML attributes to anchor tag.

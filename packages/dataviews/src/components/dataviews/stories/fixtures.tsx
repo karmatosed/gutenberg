@@ -582,6 +582,7 @@ export const actions: Action< SpaceObject >[] = [
 		isPrimary: true,
 		icon: trash,
 		hideModalHeader: true,
+		modalFocusOnMount: 'firstContentElement',
 		RenderModal: ( { items, closeModal } ) => {
 			return (
 				<VStack spacing="5">
@@ -637,9 +638,6 @@ export const fields: Field< SpaceObject >[] = [
 		id: 'title',
 		enableHiding: false,
 		enableGlobalSearch: true,
-		render: ( { item } ) => {
-			return <a href="#nothing">{ item.title }</a>;
-		},
 	},
 	{
 		id: 'date',

@@ -23,6 +23,7 @@ import QueryInspectorControls from './inspector-controls';
 import EnhancedPaginationModal from './enhanced-pagination-modal';
 import { getQueryContextFromTemplate } from '../utils';
 import QueryToolbar from './query-toolbar';
+import { htmlElementMessages } from '../../utils/messages';
 
 const DEFAULTS_POSTS_PER_PAGE = 3;
 
@@ -37,7 +38,6 @@ export default function QueryContent( {
 	const {
 		queryId,
 		query,
-		displayLayout,
 		enhancedPagination,
 		tagName: TagName = 'div',
 		query: { inherit } = {},
@@ -85,8 +85,11 @@ export default function QueryContent( {
 	// because updates are batched after the render and changes in different query properties
 	// would cause to override previous wanted changes.
 	const updateQuery = useCallback(
-		( newQuery ) => setAttributes( { query: { ...query, ...newQuery } } ),
-		[ query, setAttributes ]
+		( newQuery ) =>
+			setAttributes( ( prevAttributes ) => ( {
+				query: { ...prevAttributes.query, ...newQuery },
+			} ) ),
+		[ setAttributes ]
 	);
 	useEffect( () => {
 		const newQuery = {};
@@ -97,21 +100,15 @@ export default function QueryContent( {
 		} else if ( ! query.perPage && postsPerPage ) {
 			newQuery.perPage = postsPerPage;
 		}
-		// We need to reset the `inherit` value if in a singular template, as queries
-		// are not inherited when in singular content (e.g. post, page, 404, blank).
-		if ( isSingular && query.inherit ) {
-			newQuery.inherit = false;
-		}
+
 		if ( !! Object.keys( newQuery ).length ) {
 			__unstableMarkNextChangeAsNotPersistent();
 			updateQuery( newQuery );
 		}
 	}, [
 		query.perPage,
-		query.inherit,
-		postsPerPage,
 		inherit,
-		isSingular,
+		postsPerPage,
 		__unstableMarkNextChangeAsNotPersistent,
 		updateQuery,
 	] );
@@ -128,21 +125,6 @@ export default function QueryContent( {
 		__unstableMarkNextChangeAsNotPersistent,
 		setAttributes,
 	] );
-	const updateDisplayLayout = ( newDisplayLayout ) =>
-		setAttributes( {
-			displayLayout: { ...displayLayout, ...newDisplayLayout },
-		} );
-	const htmlElementMessages = {
-		main: __(
-			'The <main> element should be used for the primary content of your document only.'
-		),
-		section: __(
-			"The <section> element should represent a standalone portion of the document that can't be better represented by another element."
-		),
-		aside: __(
-			"The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content."
-		),
-	};
 
 	return (
 		<>
@@ -156,7 +138,6 @@ export default function QueryContent( {
 					name={ name }
 					attributes={ attributes }
 					setQuery={ updateQuery }
-					setDisplayLayout={ updateDisplayLayout }
 					setAttributes={ setAttributes }
 					clientId={ clientId }
 					isSingular={ isSingular }

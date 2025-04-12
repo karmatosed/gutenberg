@@ -13,11 +13,14 @@ import { FeaturedImageView } from './featured-image-view';
 
 const featuredImageField: Field< BasePost > = {
 	id: 'featured_media',
-	type: 'text',
+	type: 'media',
 	label: __( 'Featured Image' ),
 	Edit: FeaturedImageEdit,
 	render: FeaturedImageView,
 	enableSorting: false,
 };
 
+/**
+ * Featured Image field for BasePost.
+ */
 export default featuredImageField;

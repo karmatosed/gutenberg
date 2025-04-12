@@ -39,6 +39,7 @@ const trashPost: Action< PostWithPermissions > = {
 	},
 	supportsBulk: true,
 	hideModalHeader: true,
+	modalFocusOnMount: 'firstContentElement',
 	RenderModal: ( { items, closeModal, onActionPerformed } ) => {
 		const [ isBusy, setIsBusy ] = useState( false );
 		const { createSuccessNotice, createErrorNotice } =
@@ -195,4 +196,7 @@ const trashPost: Action< PostWithPermissions > = {
 	},
 };
 
+/**
+ * Trash action for PostWithPermissions.
+ */
 export default trashPost;
