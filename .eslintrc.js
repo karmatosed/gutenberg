@@ -228,6 +228,8 @@ module.exports = {
 				'import/no-unresolved': 'off',
 				'import/named': 'off',
 				'@wordpress/data-no-store-string-literals': 'off',
+				'react-hooks/react-compiler': 'off',
+				'react-hooks/exhaustive-deps': 'off',
 			},
 		},
 		{
