@@ -212,6 +212,7 @@ module.exports = {
 				definedTags: [ 'jest-environment' ],
 			},
 		],
+		'react-hooks/rules-of-hooks': 'warn',
 	},
 	overrides: [
 		{
