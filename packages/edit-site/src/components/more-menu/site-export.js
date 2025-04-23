@@ -12,9 +12,13 @@ import { store as noticesStore } from '@wordpress/notices';
 
 export default function SiteExport() {
 	const canExport = useSelect( ( select ) => {
-		return select( coreStore ).getCurrentTheme().is_block_theme;
-	}, [] );
+		const targetHints =
+			select( coreStore ).getCurrentTheme()?._links?.[
+				'wp:export-theme'
+			]?.[ 0 ]?.targetHints ?? {};
 
+		return !! targetHints.allow?.includes( 'GET' );
+	}, [] );
 	const { createErrorNotice } = useDispatch( noticesStore );
 
 	if ( ! canExport ) {
