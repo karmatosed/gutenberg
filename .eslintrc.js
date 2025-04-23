@@ -212,7 +212,15 @@ module.exports = {
 				definedTags: [ 'jest-environment' ],
 			},
 		],
-		'react-hooks/react-compiler': 'error',
+		'react-hooks/react-compiler': [
+			'error',
+			{
+				environment: {
+					enableTreatRefLikeIdentifiersAsRefs: true,
+					validateRefAccessDuringRender: false,
+				},
+			},
+		],
 	},
 	overrides: [
 		{
